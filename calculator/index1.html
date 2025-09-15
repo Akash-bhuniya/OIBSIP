@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Calculator </title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> Advanced Calculator</h1>
+            <p>Your all-in-one calculation companion</p>
+        </div>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="showMode('calculator')">Calculator</button>
+            <button class="mode-btn" onclick="showMode('converters')">Converters & Tools</button>
+        </div>
+
+        <div id="calculator-mode">
+            <div class="calculator-container">
+                <!-- Unified Calculator -->
+                <div class="calculator">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="color: rgba(255, 255, 255, 0.95); margin: 0; font-weight: 600;">Calculator</h3>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <button class="history-btn" onclick="toggleHistory()">📜 History</button>
+                            <div class="calc-toggle">
+                                <button class="toggle-btn active" onclick="toggleCalculator('normal')">Normal</button>
+                                <button class="toggle-btn" onclick="toggleCalculator('scientific')">Scientific</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="display" id="calculatorDisplay" readonly>
+                    
+                    <!-- Normal Calculator Buttons -->
+                    <div class="buttons normal-buttons" id="normalButtons">
+                        <button class="btn btn-clear" onclick="clearCalculator()">C</button>
+                        <button class="btn btn-clear" onclick="backspaceCalculator()">⌫</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('/')">/</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('*')">×</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('7')">7</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('8')">8</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('9')">9</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('-')">-</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('4')">4</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('5')">5</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('6')">6</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('+')">+</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('1')">1</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('2')">2</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('3')">3</button>
+                        <button class="btn btn-equals" onclick="calculateResult()" style="grid-row: span 2;">=</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('0')" style="grid-column: span 2;">0</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('.')">.</button>
+                    </div>
+
+                    <!-- Scientific Calculator Buttons -->
+                    <div class="buttons scientific-buttons hidden" id="scientificButtons">
+                        <button class="btn btn-function" onclick="appendToCalculator('sin(')">sin</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('cos(')">cos</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('tan(')">tan</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('log(')">log</button>
+                        <button class="btn btn-clear" onclick="clearCalculator()">C</button>
+                        
+                        <button class="btn btn-function" onclick="insertSquareRoot()">√</button>
+                        <button class="btn btn-function" onclick="insertPower()">x^y</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('(')">(</button>
+                        <button class="btn btn-function" onclick="appendToCalculator(')')">)</button>
+                        <button class="btn btn-clear" onclick="backspaceCalculator()">⌫</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('7')">7</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('8')">8</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('9')">9</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('/')">/</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('3.14159')">π</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('4')">4</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('5')">5</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('6')">6</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('*')">×</button>
+                        <button class="btn btn-function" onclick="appendToCalculator('2.71828')">e</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('1')">1</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('2')">2</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('3')">3</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('-')">-</button>
+                        <button class="btn btn-equals" onclick="calculateResult()" style="grid-row: span 2;">=</button>
+                        
+                        <button class="btn btn-number" onclick="appendToCalculator('0')">0</button>
+                        <button class="btn btn-number" onclick="appendToCalculator('.')">.</button>
+                        <button class="btn btn-operator" onclick="appendToCalculator('+')">+</button>
+                        <button class="btn btn-function" onclick="insertFactorial()">x!</button>
+                    </div>
+                </div>
+
+                <!-- History Panel -->
+                <div class="history-panel" id="historyPanel">
+                    <div class="history-header">
+                        <h3>📜 Calculation History</h3>
+                        <button class="clear-history-btn" onclick="clearHistory()">Clear All</button>
+                    </div>
+                    <div id="historyList">
+                        <div class="history-empty">No calculations yet. Start calculating to see your history!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="converters-mode" class="hidden">
+            <div class="converters">
+                <!-- Temperature Converter -->
+                <div class="converter">
+                    <h3>🌡️ Temperature Converter</h3>
+                    <div class="input-group">
+                        <label>Temperature:</label>
+                        <input type="number" id="tempInput" placeholder="Enter temperature">
+                    </div>
+                    <div class="input-group">
+                        <label>From:</label>
+                        <select id="tempFrom">
+                            <option value="celsius">Celsius (°C)</option>
+                            <option value="fahrenheit">Fahrenheit (°F)</option>
+                            <option value="kelvin">Kelvin (K)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>To:</label>
+                        <select id="tempTo">
+                            <option value="fahrenheit">Fahrenheit (°F)</option>
+                            <option value="celsius">Celsius (°C)</option>
+                            <option value="kelvin">Kelvin (K)</option>
+                        </select>
+                    </div>
+                    <button class="convert-btn" onclick="convertTemperature()">Convert</button>
+                    <div class="result" id="tempResult">Result will appear here</div>
+                </div>
+
+                <!-- EMI Calculator -->
+                <div class="converter">
+                    <h3>🏠 EMI Calculator</h3>
+                    <div class="input-group">
+                        <label>Loan Amount (₹):</label>
+                        <input type="number" id="loanAmount" placeholder="Enter loan amount">
+                    </div>
+                    <div class="input-group">
+                        <label>Interest Rate (% per annum):</label>
+                        <input type="number" id="interestRate" placeholder="Enter interest rate" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Loan Tenure (years):</label>
+                        <input type="number" id="loanTenure" placeholder="Enter tenure in years">
+                    </div>
+                    <button class="convert-btn" onclick="calculateEMI()">Calculate EMI</button>
+                    <div class="result" id="emiResult">EMI details will appear here</div>
+                </div>
+
+                <!-- Unit Converter -->
+                <div class="converter">
+                    <h3>📏 Length Converter</h3>
+                    <div class="input-group">
+                        <label>Length:</label>
+                        <input type="number" id="lengthInput" placeholder="Enter length">
+                    </div>
+                    <div class="input-group">
+                        <label>From:</label>
+                        <select id="lengthFrom">
+                            <option value="meters">Meters</option>
+                            <option value="kilometers">Kilometers</option>
+                            <option value="centimeters">Centimeters</option>
+                            <option value="feet">Feet</option>
+                            <option value="inches">Inches</option>
+                            <option value="yards">Yards</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>To:</label>
+                        <select id="lengthTo">
+                            <option value="feet">Feet</option>
+                            <option value="meters">Meters</option>
+                            <option value="kilometers">Kilometers</option>
+                            <option value="centimeters">Centimeters</option>
+                            <option value="inches">Inches</option>
+                            <option value="yards">Yards</option>
+                        </select>
+                    </div>
+                    <button class="convert-btn" onclick="convertLength()">Convert</button>
+                    <div class="result" id="lengthResult">Result will appear here</div>
+                </div>
+
+                <!-- BMI Calculator -->
+                <div class="converter">
+                    <h3>⚖️ BMI Calculator</h3>
+                    <div class="input-group">
+                        <label>Weight (kg):</label>
+                        <input type="number" id="weight" placeholder="Enter weight in kg">
+                    </div>
+                    <div class="input-group">
+                        <label>Height (cm):</label>
+                        <input type="number" id="height" placeholder="Enter height in cm">
+                    </div>
+                    <button class="convert-btn" onclick="calculateBMI()">Calculate BMI</button>
+                    <div class="result" id="bmiResult">BMI result will appear here</div>
+                </div>
+
+                <!-- Percentage Calculator -->
+                <div class="converter">
+                    <h3>📊 Percentage Calculator</h3>
+                    <div class="input-group">
+                        <label>Number:</label>
+                        <input type="number" id="percentNumber" placeholder="Enter number">
+                    </div>
+                    <div class="input-group">
+                        <label>Percentage (%):</label>
+                        <input type="number" id="percentValue" placeholder="Enter percentage">
+                    </div>
+                    <button class="convert-btn" onclick="calculatePercentage()">Calculate</button>
+                    <div class="result" id="percentResult">Result will appear here</div>
+                </div>
+
+                <!-- Age Calculator -->
+                <div class="converter">
+                    <h3>🎂 Age Calculator</h3>
+                    <div class="input-group">
+                        <label>Birth Date:</label>
+                        <input type="date" id="birthDate">
+                    </div>
+                    <button class="convert-btn" onclick="calculateAge()">Calculate Age</button>
+                    <div class="result" id="ageResult">Age will appear here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
