@@ -1,0 +1,42 @@
+# React Login Authentication App
+
+A simple React-based login and registration system with client-side authentication using `localStorage`.  
+Users can register, login, and access a secure page. Includes form validation and error handling.
+
+---
+
+## Features
+
+- User registration with name, email, and password
+- User login with email and password
+- Client-side form validation (email format, password length, password confirmation)
+- Persistent login state using `localStorage`
+- Secure page accessible only after login
+- Logout functionality
+- Responsive and clean UI with Tailwind CSS styling
+- Icons from `lucide-react`
+
+---
+
+## Demo
+
+![Login Screen](./screenshots/login.png)  
+![Secure Page](./screenshots/secure-page.png)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher recommended)
+- npm (comes with Node.js)
+
+### Installation
+
+1. Clone the repository or copy the source code.
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd login-auth-app
